@@ -1,0 +1,60 @@
+version: "3.8"
+services:
+  rustadmin:
+    image: rustadmin:latest
+    build:
+      context: ./rustmon
+    ports:
+      - "${RUSTADMIN_PORT:-8080}:80"
+    environment:
+      - BACKEND_URL=http://rustadmin-service:3000
+    depends_on:
+      - rustadmin-service
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:80/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  rustadmin-service:
+    image: rustadmin-service:latest
+    build:
+      context: ./user-data-srv
+    environment:
+      - STEAM_API=${STEAM_API}
+      - CACHE_HOST=redis
+      - CACHE_PORT=6379
+      - CACHE_AUTH=${REDIS_PASSWORD:-}
+      - CACHE_TTL=${CACHE_TTL:-604800}
+      - DATA_DIR=/data
+      - DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN:-}
+      - DISCORD_CHANNEL_ID=${DISCORD_CHANNEL_ID:-}
+      - DISCORD_STATUS_CHANNEL_ID=${DISCORD_STATUS_CHANNEL_ID:-}
+      - DISCORD_OXIDE_GROUP=${DISCORD_OXIDE_GROUP:-discord}
+      - VPN_CHECK_ENABLED=${VPN_CHECK_ENABLED:-true}
+      - VPN_AUTO_KICK=${VPN_AUTO_KICK:-false}
+    volumes:
+      - rustadmin_data:/data
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    command: >
+      sh -c "if [ -n '$$REDIS_PASSWORD' ]; then
+        redis-server --requirepass $$REDIS_PASSWORD;
+      else
+        redis-server;
+      fi"
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+  rustadmin_data:
