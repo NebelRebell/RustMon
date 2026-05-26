@@ -45,6 +45,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public message: string = '';
   public command: string = '';
 
+  // console history
+  private commandHistory: string[] = [];
+  private historyIndex: number = -1;
+  private readonly HISTORY_KEY_PREFIX = 'rustadmin_console_history_';
+  private readonly HISTORY_MAX = 100;
+
   public version = environment.version;
   public oxide?: string;
 
@@ -74,6 +80,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.connectionString = this.rustSrv.getConnectionString();
+    this.loadHistory();
     this.subscription = this.rustSrv.getEvtRust().subscribe(d => {
       if (d.type === REType.UNKOWN) {
         // show in console.
@@ -190,6 +197,48 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
 
+  private historyKey(): string {
+    return this.HISTORY_KEY_PREFIX + (this.connectionString || 'default');
+  }
+
+  private loadHistory() {
+    try {
+      const saved = localStorage.getItem(this.historyKey());
+      if (saved) this.commandHistory = JSON.parse(saved);
+    } catch (_) {}
+  }
+
+  private saveHistory() {
+    try {
+      localStorage.setItem(this.historyKey(), JSON.stringify(this.commandHistory));
+    } catch (_) {}
+  }
+
+  private pushToHistory(cmd: string) {
+    if (!cmd.trim()) return;
+    this.commandHistory = [cmd, ...this.commandHistory.filter(c => c !== cmd)].slice(0, this.HISTORY_MAX);
+    this.saveHistory();
+    this.historyIndex = -1;
+  }
+
+  consoleKeyDown(evt: KeyboardEvent) {
+    if (evt.key === 'ArrowUp') {
+      evt.preventDefault();
+      if (this.commandHistory.length === 0) return;
+      this.historyIndex = Math.min(this.historyIndex + 1, this.commandHistory.length - 1);
+      this.command = this.commandHistory[this.historyIndex];
+    } else if (evt.key === 'ArrowDown') {
+      evt.preventDefault();
+      this.historyIndex = Math.max(this.historyIndex - 1, -1);
+      this.command = this.historyIndex === -1 ? '' : this.commandHistory[this.historyIndex];
+    } else if (evt.key === 'Escape') {
+      this.historyIndex = -1;
+      this.command = '';
+    } else if (evt.key === 'Enter') {
+      this.testCommand();
+    }
+  }
+
   send() {
     this.rustSrv.sendCommand(this.command);
     this.command = '';
@@ -217,13 +266,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   testCommand() {
+    if (!this.command.trim()) return;
+    this.pushToHistory(this.command);
     this.rustSrv.sendCommand(this.command);
     this.command = '';
     document.getElementById('commandInput')?.focus();
   }
 
   kp(evt: any) {
-    if(evt.keyCode == 13) {
+    if (evt.keyCode == 13) {
       this.testCommand();
     }
   }
