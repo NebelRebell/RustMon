@@ -1,101 +1,93 @@
-# RustMon 1.6.0
+> **Forked from [alexander171294/RustMon](https://github.com/alexander171294/RustMon) (Apache-2.0). Original Copyright 2022 alexander171294.**
 
-Rust admin panel (RustMonitor) See our 👉🏼 [Live Instance](https://rustmon.tercerpiso.net)
+# RustAdmin 2.0.0
 
-### Current features
+A powerful, self-hosted web admin panel for Rust game servers. Manage your servers, players, plugins, and more — all from a clean browser interface.
 
-- Multiple servers login record.
-- Simple full control (Chat, Players and Console) on single screen
-- Plugin enable/disable/reload and update checker
-- Permissions groups and export/import to apply on multiple servers
-- All configurations on a simple panel
-- Reboot with time warning
-- Players tools like autokick when high ping
+---
 
-### Roadmap
+## Features
 
-- More player tools (auto respond commands, auto kick more options, Skip queue)
-- Discord login screen
-- Player permissions
-- Discord bot to send server information, bypass messages between chat and discord channel, assign groups to discord users
-- Commands memory with up arrow (rewrite last command sended) on console
-- RustMon Blacklist (a blacklist of players shared between rustmon clients)
+### Core (from RustMon)
+- Multi-server login and management
+- Real-time dashboard: chat, players, console on one screen
+- Plugin manager (enable / disable / reload, update checker)
+- Permissions groups — export/import across multiple servers
+- All server configurations in one panel
+- Scheduled restart with countdown warning
+- Player tools: auto-kick by ping, skip queue
 
-## Screenshots:
+### New in RustAdmin 2.0.0
+- **Console command history** — navigate with ↑/↓ arrow keys, persisted per server
+- **Player map overlay** — real-time player positions on the RustMaps map
+- **Discord bot integration** — chat bridge, server status embeds, Steam account linking
+- **Player Blacklist** — shared blacklist with auto-kick on join, import/export JSON
+- **Scheduled commands** — define recurring RCON commands (cron-style intervals)
+- **Savable item lists** — save "give item" presets in the browser
+- **VPN detection** — flag or auto-kick VPN/proxy players via ip-api.com
+- **ARM support** — multi-arch Docker images for amd64, arm64, arm/v7
+- **Configurable port** — set `RUSTADMIN_PORT` via environment variable
+- **Robust startup** — validates required env vars, Redis retry with exponential backoff
 
-### Login
+---
 
-![Login](https://i.imgur.com/C6AolI6.png)
+## Screenshots
 
-### Dashboard
+| Login | Dashboard | Plugin Manager |
+|---|---|---|
+| ![Login](https://i.imgur.com/C6AolI6.png) | ![Dashboard](https://i.imgur.com/LBMmO1U.png) | ![Plugins](https://i.imgur.com/8qNMET3.png) |
 
-![dashboard](https://i.imgur.com/LBMmO1U.png)
+| Player Details | Player Tools | Permissions |
+|---|---|---|
+| ![Players](https://i.imgur.com/8oUQXug.png) | ![Tools](https://i.imgur.com/nptYGlO.png) | ![Permissions](https://i.imgur.com/bo3G41h.png) |
 
-### Server configurations
+---
 
-![config server](https://i.imgur.com/4eBmGje.png)
+## Quick Start
 
-![config map](https://i.imgur.com/sH392gF.png)
+See [INSTALL.md](INSTALL.md) for the full installation guide.
 
-### Player details and search
-
-![player details](https://i.imgur.com/8oUQXug.png)
-
-### Player tools
-
-![player tools](https://i.imgur.com/nptYGlO.png)
-
-### Plugin manager
-
-![plugin manager](https://i.imgur.com/8qNMET3.png)
-
-### Permissions manager
-![permissions manager](https://i.imgur.com/bo3G41h.png)
-
-## Run and build
-
-Install dependencies:
-
-`npm i`
-
-Run local dev mode:
-
-`ng serve`
-
-Build redist package:
-
-`ng build --prod`
-
-or if you don't have angular installed
-
-`npm run buildprod`
-
-# run with docker in server:
-
-## Dashboard:
-
-```
-docker run -p 80:80 -itd alexander171294/rustmon:latest
+```bash
+git clone https://github.com/DEIN_USERNAME/RustAdmin.git && cd RustAdmin
+cp .env.example .env
+# Edit .env: set STEAM_API=your-key
+docker compose up -d
+# Open http://localhost:8080
 ```
 
-Or see live instance in:
+---
 
-[rustmon.tercerpiso.net](https://rustmon.tercerpiso.net)
+## Configuration Reference
 
-## Backend Service:
+| Variable | Default | Description |
+|---|---|---|
+| `STEAM_API` | — | **Required.** Steam Web API Key. |
+| `RUSTADMIN_PORT` | `8080` | Host port for the web UI. |
+| `CACHE_HOST` | `localhost` | Redis hostname. |
+| `CACHE_PORT` | `6379` | Redis port. |
+| `CACHE_AUTH` | — | Redis password (optional). |
+| `DISCORD_BOT_TOKEN` | — | Discord bot token (optional). |
+| `DISCORD_CHANNEL_ID` | — | Chat bridge channel ID. |
+| `DISCORD_STATUS_CHANNEL_ID` | — | Server status channel ID. |
+| `VPN_CHECK_ENABLED` | `true` | Enable VPN detection. |
+| `VPN_AUTO_KICK` | `false` | Auto-kick VPN players. |
 
-Api for get steam-profile, api-geolocalization, rustmap info:
+See [INSTALL.md](INSTALL.md) for the complete list.
 
-First, in order to use your custom served api, you need to edit environment.prod.ts and change `http://rustmon-udata.tercerpiso.tech/` for your endpoint and rebuild docker image, or run ng build again with your changes.
+---
 
-Second, you need to start a redis service (it is used for cache user data).
+## Technology Stack
 
-Third, you need to run our docker image of rustmon-service with your api key and environments and expose in your endpoint:
+- **Frontend:** Angular 13, PrimeNG, SCSS
+- **Backend:** NestJS (Node.js 18)
+- **Cache:** Redis 7
+- **Deployment:** Docker, Docker Compose (multi-arch: amd64, arm64, arm/v7)
+- **External:** Steam API, ip-api.com (VPN detection), RustMaps API, Discord.js 14
 
-```
-docker run -p 80:3000 -e STEAM_API="YOUR-STEAM-API-KEY" -e CACHE_HOST="YOUR-REDIS-HOST" -e CACHE_AUTH="YOUR-REDIS-PASSWORD" -e CACHE_PORT="YOUR-REDIS-PORT" -itd alexander171294/rustmon-service:latest
-```
+---
 
-### How to get my steam api key?
+## License
 
-[See steam api key documentation](https://steamcommunity.com/dev/apikey)
+Apache-2.0 — see [LICENSE](LICENSE).
+
+Forked from [RustMon by alexander171294](https://github.com/alexander171294/RustMon).
