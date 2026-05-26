@@ -1,32 +1,42 @@
 import { Module } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
 import { AppController } from './app.controller';
 import { ValveApiService } from './valve/valve-api.service';
 import { IPGeocodeService } from './ipGeocode/ipgeocode.service';
-import { HttpModule } from '@nestjs/axios';
 import { CacheRedisService } from './redis/redis.service';
 import { RustMapService } from './rustmap/rustmap.service';
 import { UmodService } from './umod/umod.service';
+import { BlacklistModule } from './blacklist/blacklist.module';
+import { ScheduledCommandsModule } from './scheduled-commands/scheduled-commands.module';
+import { VpnModule } from './vpn/vpn.module';
+import { DiscordModule } from './discord/discord.module';
 import { environment } from './environment';
-import { ApmModule } from '@student-coin/elastic-apm-nest';
 
-const imports: any = environment.APM.enabled ? [
-  ApmModule.forRootAsync({
-    useFactory: async () => {
-      return {
-        httpUserMapFunction: (req: any) => {
-          return {
-            id: req?.user?.id,
-            username: req?.user?.username,
-            email: req?.user?.email,
-          };
-        },
-      };
-    },
-  })
-] : [];
+const apmImports: any[] = [];
+if (environment.APM.enabled) {
+  const { ApmModule } = require('@student-coin/elastic-apm-nest');
+  apmImports.push(
+    ApmModule.forRootAsync({
+      useFactory: async () => ({
+        httpUserMapFunction: (req: any) => ({
+          id: req?.user?.id,
+          username: req?.user?.username,
+          email: req?.user?.email,
+        }),
+      }),
+    })
+  );
+}
 
 @Module({
-  imports: [HttpModule].concat(imports),
+  imports: [
+    HttpModule,
+    BlacklistModule,
+    ScheduledCommandsModule,
+    VpnModule,
+    DiscordModule,
+    ...apmImports,
+  ],
   controllers: [AppController],
   providers: [ValveApiService, IPGeocodeService, CacheRedisService, RustMapService, UmodService],
 })
