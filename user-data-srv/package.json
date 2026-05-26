@@ -29,7 +29,7 @@
     "@types/redis": "^2.8.28",
     "cookiejar": "^2.1.4",
     "crypto": "^1.0.1",
-    "discord.js": "^14.0.0",
+    "discord.js": "^13.17.1",
     "elastic-apm-node": "^4.5.4",
     "json5": "^2.2.3",
     "minimatch": "^10.2.5",

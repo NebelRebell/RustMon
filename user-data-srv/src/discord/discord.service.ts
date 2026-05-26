@@ -4,13 +4,21 @@ const DISCORD_TOKEN = process.env.DISCORD_BOT_TOKEN;
 const CHAT_CHANNEL_ID = process.env.DISCORD_CHANNEL_ID;
 const STATUS_CHANNEL_ID = process.env.DISCORD_STATUS_CHANNEL_ID;
 
+export type ServerStatusFn = () => Promise<{
+  players: number;
+  fps: number;
+  uptime: number;
+  queued: number;
+  hostname: string;
+}>;
+
 @Injectable()
 export class DiscordService implements OnModuleInit, OnModuleDestroy {
   private readonly logger = new Logger(DiscordService.name);
   private client: any = null;
   private enabled = !!DISCORD_TOKEN;
   private statusInterval: NodeJS.Timeout | null = null;
-  private serverStatusProvider?: () => Promise<{ players: number; fps: number; uptime: number; queued: number; hostname: string }>;
+  private serverStatusProvider?: ServerStatusFn;
   private rconSend?: (cmd: string) => void;
 
   onModuleInit() {
@@ -28,7 +36,7 @@ export class DiscordService implements OnModuleInit, OnModuleDestroy {
     }
   }
 
-  setServerStatusProvider(fn: typeof this.serverStatusProvider) {
+  setServerStatusProvider(fn: ServerStatusFn) {
     this.serverStatusProvider = fn;
   }
 
@@ -38,18 +46,17 @@ export class DiscordService implements OnModuleInit, OnModuleDestroy {
 
   private async initBot() {
     try {
-      const { Client, GatewayIntentBits, EmbedBuilder } = await import('discord.js');
+      const { Client, Intents, MessageEmbed } = await import('discord.js') as any;
       this.client = new Client({
         intents: [
-          GatewayIntentBits.Guilds,
-          GatewayIntentBits.GuildMessages,
-          GatewayIntentBits.MessageContent,
+          Intents.FLAGS.GUILDS,
+          Intents.FLAGS.GUILD_MESSAGES,
         ],
       });
 
       this.client.once('ready', () => {
         this.logger.log(`Discord bot online as ${this.client.user.tag}`);
-        this.startStatusUpdates(EmbedBuilder);
+        this.startStatusUpdates(MessageEmbed);
       });
 
       this.client.on('messageCreate', async (msg: any) => {
@@ -79,23 +86,21 @@ export class DiscordService implements OnModuleInit, OnModuleDestroy {
     }
   }
 
-  private startStatusUpdates(EmbedBuilder: any) {
+  private startStatusUpdates(MessageEmbed: any) {
     if (!STATUS_CHANNEL_ID || !this.serverStatusProvider) return;
     this.statusInterval = setInterval(async () => {
       try {
         const status = await this.serverStatusProvider();
         const channel = await this.client.channels.fetch(STATUS_CHANNEL_ID);
         if (!channel) return;
-        const embed = new EmbedBuilder()
+        const embed = new MessageEmbed()
           .setTitle('Server Status')
-          .setColor(0x00ae86)
-          .addFields(
-            { name: 'Server', value: status.hostname, inline: false },
-            { name: 'Players', value: String(status.players), inline: true },
-            { name: 'FPS', value: String(status.fps), inline: true },
-            { name: 'Queued', value: String(status.queued), inline: true },
-            { name: 'Uptime', value: `${Math.floor(status.uptime / 60)}m`, inline: true },
-          )
+          .setColor('#00ae86')
+          .addField('Server', status.hostname, false)
+          .addField('Players', String(status.players), true)
+          .addField('FPS', String(status.fps), true)
+          .addField('Queued', String(status.queued), true)
+          .addField('Uptime', `${Math.floor(status.uptime / 60)}m`, true)
           .setTimestamp();
         await channel.send({ embeds: [embed] });
       } catch (e) {
