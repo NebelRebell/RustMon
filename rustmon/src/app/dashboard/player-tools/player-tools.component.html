@@ -5,18 +5,11 @@
             <svg (click)="close.emit()" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" class="svg-inline--fa fa-times fa-w-11"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z" class=""></path></svg>
         </header>
         <nav>
-          <div [class.active]="tab==0" (click)="tab=0">
-            Auto-Kick
-          </div>
-          <div [class.active]="tab==1" (click)="tab=1" class="wip">
-            Restrictions
-          </div>
-          <div [class.active]="tab==2" (click)="tab=2" class="wip">
-            In game BOT
-          </div>
-          <div [class.active]="tab==3" (click)="tab=3" class="wip">
-            Auto-skip queue
-          </div>
+          <div [class.active]="tab==0" (click)="tab=0">Auto-Kick</div>
+          <div [class.active]="tab==1" (click)="tab=1" class="wip">Restrictions</div>
+          <div [class.active]="tab==2" (click)="tab=2" class="wip">In game BOT</div>
+          <div [class.active]="tab==3" (click)="tab=3" class="wip">Auto-skip queue</div>
+          <div [class.active]="tab==4" (click)="tab=4">Item Lists</div>
         </nav>
         <section [hidden]="tab!=0">
             <p>This only works when the pannel is open</p>
@@ -53,6 +46,44 @@
             Add player to auto-skip queue (from discord? if I have one?)<br />
           </p>
       </section>
+        <section [hidden]="tab!=4">
+          <h3>Give Item Lists</h3>
+          <p style="color:#aaa;font-size:0.85rem;">Save presets of items to quickly give to players.</p>
+
+          <div style="margin-bottom:10px;" *ngIf="savedListNames.length > 0">
+            <label>Load saved list:</label>
+            <select [(ngModel)]="selectedListName" (change)="loadList(selectedListName)" style="margin-left:8px;">
+              <option value="">-- Select --</option>
+              <option *ngFor="let name of savedListNames" [value]="name">{{name}}</option>
+            </select>
+            <button (click)="deleteList(selectedListName)" *ngIf="selectedListName" style="margin-left:6px;background:#c0392b;">Delete</button>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
+            <input type="text" placeholder="Item name (e.g. wood)" [(ngModel)]="newItem.itemName" style="flex:2;" />
+            <input type="number" placeholder="Amount" [(ngModel)]="newItem.amount" style="flex:1;width:80px;" min="1" />
+            <input type="text" placeholder="SteamID (optional)" [(ngModel)]="newItem.targetSteamId" style="flex:2;" />
+            <button (click)="addItemToList()">+ Add</button>
+          </div>
+
+          <table *ngIf="currentList.length > 0" style="width:100%;margin-bottom:10px;">
+            <thead><tr><th>Item</th><th>Amount</th><th>SteamID</th><th></th></tr></thead>
+            <tbody>
+              <tr *ngFor="let item of currentList; let i = index">
+                <td>{{item.itemName}}</td>
+                <td>{{item.amount}}</td>
+                <td>{{item.targetSteamId || '-'}}</td>
+                <td><button (click)="removeItemFromList(i)" style="background:#c0392b;padding:2px 8px;">✕</button></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="display:flex;gap:8px;align-items:center;" *ngIf="currentList.length > 0">
+            <input type="text" placeholder="List name" [(ngModel)]="newListName" />
+            <button (click)="saveCurrentList()">Save List</button>
+          </div>
+        </section>
+
         <footer>
           <button (click)="save()">Apply</button>
         </footer>
