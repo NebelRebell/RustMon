@@ -23,4 +23,5 @@ export enum REType {
   GROUPS = 1009,
   PERMS = 1010,
   GROUP_DETAILS = 1011,
+  PLAYER_POSITIONS = 1012,
 }

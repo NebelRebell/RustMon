@@ -23,6 +23,7 @@ import { ConfigComponent } from './config/config.component';
 import { PlayerToolsComponent } from './player-tools/player-tools.component';
 import { UmodComponent } from './umod/umod.component';
 import { PermsComponent } from './perms/perms.component';
+import { MapOverlayComponent } from '../components/map-overlay/map-overlay.component';
 import { DropdownModule } from 'primeng/dropdown';
 
 const routes: Routes = [
@@ -45,6 +46,7 @@ const routes: Routes = [
     PlayerToolsComponent,
     UmodComponent,
     PermsComponent,
+    MapOverlayComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,44 @@
+<div class="map-overlay-container" *ngIf="mapUrl">
+  <div class="map-controls">
+    <label>
+      <input type="checkbox" [(ngModel)]="showPlayers" />
+      Spieler anzeigen
+    </label>
+  </div>
+
+  <div class="map-wrapper">
+    <img [src]="mapUrl" class="map-image" alt="Server Map" />
+    <svg *ngIf="showPlayers" class="player-overlay" [attr.viewBox]="'0 0 1000 1000'">
+      <g *ngFor="let player of players">
+        <circle
+          [attr.cx]="player.pixelX"
+          [attr.cy]="player.pixelY"
+          r="6"
+          [attr.fill]="player.sleeping ? '#aaaaaa' : '#44ff44'"
+          stroke="#000"
+          stroke-width="1.5"
+          style="cursor: pointer;"
+          (mouseenter)="onPlayerHover(player, $event)"
+          (mouseleave)="onPlayerLeave()"
+        />
+      </g>
+    </svg>
+
+    <div class="player-tooltip" *ngIf="hoveredPlayer"
+         [style.left.px]="tooltipX" [style.top.px]="tooltipY">
+      <strong>{{hoveredPlayer.name}}</strong><br/>
+      <small>{{hoveredPlayer.steamId}}</small><br/>
+      <small *ngIf="hoveredPlayer.sleeping" style="color:#aaa">(sleeping)</small>
+    </div>
+  </div>
+
+  <div class="map-legend">
+    <span class="legend-online">● Online</span>
+    <span class="legend-sleeping">● Sleeping</span>
+    <span class="legend-count">{{players.length}} players on map</span>
+  </div>
+</div>
+
+<div class="map-unavailable" *ngIf="!mapUrl">
+  <p>Map not available. Configure map seed and size in server settings.</p>
+</div>
