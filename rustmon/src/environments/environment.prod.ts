@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
-  uDataApi: 'https://rustmon-udata.tercerpiso.tech',
-  version: '1.6.0'
+  uDataApi: (window as any).__BACKEND_URL__ || 'http://localhost:3000',
+  version: '2.0.0',
+  apiPort: (window as any).__API_PORT__ || 8080
 };
