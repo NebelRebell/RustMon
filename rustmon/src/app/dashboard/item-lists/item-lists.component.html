@@ -1,0 +1,31 @@
+<div class="item-lists-panel">
+  <div class="panel-section">
+    <h4>Create List</h4>
+    <div class="input-row">
+      <input [(ngModel)]="currentListName" placeholder="List name" class="p-inputtext" />
+      <button class="btn-sm btn-primary" (click)="createList()">Add List</button>
+    </div>
+  </div>
+  <div class="panel-section" *ngIf="lists.length > 0">
+    <h4>Lists</h4>
+    <div class="list-item" *ngFor="let list of lists; let i = index" [class.selected]="selectedList === list">
+      <div class="list-header" (click)="selectedList = (selectedList === list ? null : list)">
+        <span>{{list.name}}</span>
+        <span class="cmd-count">{{list.commands.length}} cmds</span>
+        <button class="btn-sm btn-success" (click)="executeList(list); $event.stopPropagation()">Execute</button>
+        <button class="btn-sm btn-danger" (click)="deleteList(i); $event.stopPropagation()">Delete</button>
+      </div>
+      <div class="list-commands" *ngIf="selectedList === list">
+        <div class="cmd-row" *ngFor="let cmd of list.commands; let j = index">
+          <code>{{cmd}}</code>
+          <button class="btn-xs btn-danger" (click)="removeCommand(list, j)">x</button>
+        </div>
+        <div class="input-row">
+          <input [(ngModel)]="newCommand" placeholder="Add command..." class="p-inputtext" (keyup.enter)="addCommand()" />
+          <button class="btn-sm btn-primary" (click)="addCommand()">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p *ngIf="lists.length === 0" class="empty">No lists yet. Create one above.</p>
+</div>

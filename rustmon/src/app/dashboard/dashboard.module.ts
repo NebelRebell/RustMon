@@ -29,6 +29,7 @@ import { PterodactylConfigComponent } from './pterodactyl-config/pterodactyl-con
 import { PluginManagerComponent } from './plugin-manager/plugin-manager.component';
 import { ConvarsManagerComponent } from './convars-manager/convars-manager.component';
 import { WipeManagerComponent } from './wipe-manager/wipe-manager.component';
+import { ItemListsComponent } from './item-lists/item-lists.component';
 
 const routes: Routes = [
   {

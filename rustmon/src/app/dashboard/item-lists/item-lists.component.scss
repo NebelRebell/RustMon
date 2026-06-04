@@ -1,0 +1,16 @@
+.item-lists-panel { padding: 1rem; color: #e0e0e0; }
+h4 { color: #aaa; margin: 0 0 0.75rem; font-size: 0.9rem; text-transform: uppercase; }
+.panel-section { margin-bottom: 1.5rem; }
+.input-row { display: flex; gap: 0.5rem; align-items: center; }
+.p-inputtext { background: #0f3460; border: 1px solid #1a4a80; color: #e0e0e0; padding: 0.4rem 0.6rem; border-radius: 4px; flex: 1; }
+.list-item { background: #16213e; border: 1px solid #0f3460; border-radius: 6px; margin-bottom: 0.5rem; overflow: hidden; &.selected { border-color: #e94560; } }
+.list-header { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; cursor: pointer; span:first-child { flex: 1; } }
+.cmd-count { font-size: 0.8rem; color: #666; }
+.list-commands { padding: 0.75rem 1rem; border-top: 1px solid #0f3460; background: #1a1a2e; }
+.cmd-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem; code { flex: 1; font-size: 0.85rem; color: #a8d8a8; } }
+.btn-sm { padding: 0.3rem 0.7rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+.btn-xs { padding: 0.1rem 0.4rem; border: none; border-radius: 3px; cursor: pointer; font-size: 0.75rem; }
+.btn-primary { background: #e94560; color: #fff; }
+.btn-success { background: #27ae60; color: #fff; }
+.btn-danger { background: #c0392b; color: #fff; }
+.empty { color: #555; font-style: italic; }
