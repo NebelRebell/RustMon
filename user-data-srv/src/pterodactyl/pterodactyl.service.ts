@@ -1,4 +1,4 @@
-import { Injectable, Logger, BadRequestException, InternalServerErrorException } from '@nestjs/common';
+﻿import { Injectable, Logger, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { CacheRedisService } from '../redis/redis.service';
 import { PterodactylConfig, PluginInfo, ConVar, ConVarDescription } from './pterodactyl.interfaces';
@@ -95,7 +95,8 @@ export class PterodactylService {
 
       for (const file of files) {
         if (file.name.endsWith('.cs')) {
-          const pluginContent = (await sftp.get(`${pluginsDir}/${file.name}`, undefined, 'utf8')) as string;
+          const raw = await sftp.get(`${pluginsDir}/${file.name}`);
+          const pluginContent = Buffer.isBuffer(raw) ? raw.toString('utf8') : String(raw);
           const pluginInfo = this.parsePluginInfo(file.name, pluginContent);
           const updateInfo = await this.checkPluginUpdate(pluginInfo.name);
           pluginInfo.hasUpdate = updateInfo.hasUpdate;
