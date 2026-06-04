@@ -1,0 +1,95 @@
+.landing {
+  min-height: 100vh;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.landing-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  background: #16213e;
+  border-bottom: 1px solid #0f3460;
+
+  .logo { height: 48px; }
+  h1 { margin: 0; font-size: 1.8rem; color: #e94560; }
+  .version { font-size: 0.8rem; color: #888; background: #0f3460; padding: 0.2rem 0.5rem; border-radius: 4px; }
+}
+
+main { flex: 1; padding: 2rem; max-width: 1100px; margin: 0 auto; width: 100%; }
+
+.hero {
+  text-align: center;
+  padding: 3rem 0 2rem;
+  h2 { font-size: 2rem; color: #e94560; margin-bottom: 0.5rem; }
+  p { color: #aaa; font-size: 1.1rem; }
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.feature-card {
+  background: #16213e;
+  border: 1px solid #0f3460;
+  border-radius: 8px;
+  padding: 1.5rem;
+  h3 { color: #e94560; margin: 0 0 0.5rem; font-size: 1rem; }
+  p { color: #aaa; margin: 0; font-size: 0.9rem; line-height: 1.5; }
+}
+
+.cta {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.btn-primary {
+  background: #e94560;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  &:hover { background: #c73652; }
+}
+
+.oauth-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-oauth {
+  padding: 0.6rem 1.4rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: opacity 0.2s;
+  &:hover { opacity: 0.85; }
+  &.discord { background: #5865f2; color: #fff; }
+  &.steam { background: #1b2838; color: #c6d4df; border: 1px solid #4c6b22; }
+  &.google { background: #fff; color: #333; }
+}
+
+.landing-footer {
+  text-align: center;
+  padding: 1.5rem;
+  background: #16213e;
+  border-top: 1px solid #0f3460;
+  color: #666;
+  font-size: 0.85rem;
+  a { color: #e94560; text-decoration: none; &:hover { text-decoration: underline; } }
+  p { margin: 0.3rem 0; }
+}

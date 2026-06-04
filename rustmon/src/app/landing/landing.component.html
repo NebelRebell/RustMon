@@ -1,0 +1,43 @@
+<div class="landing">
+  <header class="landing-header">
+    <img src="assets/logomon.png" alt="RustMon" class="logo" onerror="this.style.display='none'" />
+    <h1>RustMon</h1>
+    <span class="version">v{{version}}</span>
+  </header>
+  <main>
+    <section class="hero">
+      <h2>The Ultimate Rust Server Admin Panel</h2>
+      <p>Manage your Rust servers, players, plugins and wipes from one powerful interface.</p>
+    </section>
+    <section class="features">
+      <div class="feature-card">
+        <h3>Real-Time Dashboard</h3>
+        <p>Live chat, player list, and console — all on one screen.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Plugin Manager</h3>
+        <p>Browse, upload, update and toggle Oxide/Carbon plugins via SFTP.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Wipe Manager</h3>
+        <p>Schedule wipes, configure map size and seed, execute with one click.</p>
+      </div>
+      <div class="feature-card">
+        <h3>ConVars Manager</h3>
+        <p>Edit server configuration variables with type validation.</p>
+      </div>
+    </section>
+    <section class="cta">
+      <button class="btn-primary" (click)="goToLogin()">Connect to Server</button>
+      <div class="oauth-buttons">
+        <button class="btn-oauth discord" (click)="oauthLogin('discord')">Login with Discord</button>
+        <button class="btn-oauth steam" (click)="oauthLogin('steam')">Login with Steam</button>
+        <button class="btn-oauth google" (click)="oauthLogin('google')">Login with Google</button>
+      </div>
+    </section>
+  </main>
+  <footer class="landing-footer">
+    <p>RustMon (Nebelbank Edition) &middot; <a href="https://github.com/NebelRebell/RustMon" target="_blank">GitHub</a> &middot; Apache-2.0</p>
+    <p>Forked from <a href="https://github.com/alexander171294/RustMon" target="_blank">alexander171294/RustMon</a> and <a href="https://github.com/NinerAlpha/RustMon" target="_blank">NinerAlpha/RustMon</a></p>
+  </footer>
+</div>
