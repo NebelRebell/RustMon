@@ -35,6 +35,15 @@ services:
       - DISCORD_OXIDE_GROUP=${DISCORD_OXIDE_GROUP:-discord}
       - VPN_CHECK_ENABLED=${VPN_CHECK_ENABLED:-true}
       - VPN_AUTO_KICK=${VPN_AUTO_KICK:-false}
+      - JWT_SECRET=${JWT_SECRET:-rustmon-dev-secret-change-in-production}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@rustmon.local}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-change-me-now}
+      - DISCORD_CLIENT_ID=${DISCORD_CLIENT_ID:-}
+      - DISCORD_CLIENT_SECRET=${DISCORD_CLIENT_SECRET:-}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}
+      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:8080}
+      - API_URL=${API_URL:-http://localhost:3000}
     volumes:
       - rustadmin_data:/data
     depends_on:
