@@ -368,4 +368,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
   copy(text: string) {
     Clipboard.writeText(text);
   }
+
+  semverGt(a: string, b: string): boolean {
+    const pa = a.replace(/[^0-9.]/g, '').split('.').map(Number);
+    const pb = b.replace(/[^0-9.]/g, '').split('.').map(Number);
+    for (let i = 0; i < 3; i++) {
+      if ((pa[i] || 0) > (pb[i] || 0)) return true;
+      if ((pa[i] || 0) < (pb[i] || 0)) return false;
+    }
+    return false;
+  }
 }

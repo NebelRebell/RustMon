@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+﻿import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -45,7 +45,7 @@ export class UserDataService {
   }
 
   public getLastVersion() {
-    return this.http.get(`https://raw.githubusercontent.com/alexander171294/RustMon/master/version.txt`, {
+    return this.http.get(`https://raw.githubusercontent.com/NebelRebell/RustMon/master/RustAdmin/version.txt`, {
       responseType: 'text'
     });
   }
