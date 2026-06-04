@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+﻿import { Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 import { AppController } from './app.controller';
 import { ValveApiService } from './valve/valve-api.service';
@@ -11,6 +11,7 @@ import { ScheduledCommandsModule } from './scheduled-commands/scheduled-commands
 import { VpnModule } from './vpn/vpn.module';
 import { DiscordModule } from './discord/discord.module';
 import { PterodactylModule } from './pterodactyl/pterodactyl.module';
+import { AuthModule } from './auth/auth.module';
 import { environment } from './environment';
 
 const apmImports: any[] = [];
@@ -37,6 +38,7 @@ if (environment.APM.enabled) {
     VpnModule,
     DiscordModule,
     PterodactylModule,
+    AuthModule,
     ...apmImports,
   ],
   controllers: [AppController],
