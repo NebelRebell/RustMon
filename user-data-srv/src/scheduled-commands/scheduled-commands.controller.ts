@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+﻿import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ScheduledCommandsService } from './scheduled-commands.service';
 
 @Controller('scheduled-commands')
@@ -23,5 +23,17 @@ export class ScheduledCommandsController {
   @Delete(':id')
   delete(@Param('id') id: string) {
     return { removed: this.svc.delete(id) };
+  }
+
+  /** Frontend polls for commands due for execution **/
+  @Get('pending')
+  getPending() {
+    return this.svc.getAll().filter(c => c.active);
+  }
+
+  /** Frontend confirms a command was executed via RCON **/
+  @Post(':id/executed')
+  markExecuted(@Param('id') id: string) {
+    return this.svc.update(id, { lastRun: new Date().toISOString() }) || { error: 'not found' };
   }
 }
