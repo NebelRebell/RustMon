@@ -56,6 +56,7 @@ const routes: Routes = [
     PluginManagerComponent,
     ConvarsManagerComponent,
     WipeManagerComponent,
+    ItemListsComponent,
   ],
   imports: [
     CommonModule,
