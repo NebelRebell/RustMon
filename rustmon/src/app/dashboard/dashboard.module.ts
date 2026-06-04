@@ -1,4 +1,4 @@
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+﻿import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
@@ -25,6 +25,10 @@ import { UmodComponent } from './umod/umod.component';
 import { PermsComponent } from './perms/perms.component';
 import { MapOverlayComponent } from '../components/map-overlay/map-overlay.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { PterodactylConfigComponent } from './pterodactyl-config/pterodactyl-config.component';
+import { PluginManagerComponent } from './plugin-manager/plugin-manager.component';
+import { ConvarsManagerComponent } from './convars-manager/convars-manager.component';
+import { WipeManagerComponent } from './wipe-manager/wipe-manager.component';
 
 const routes: Routes = [
   {
@@ -47,6 +51,10 @@ const routes: Routes = [
     UmodComponent,
     PermsComponent,
     MapOverlayComponent,
+    PterodactylConfigComponent,
+    PluginManagerComponent,
+    ConvarsManagerComponent,
+    WipeManagerComponent,
   ],
   imports: [
     CommonModule,

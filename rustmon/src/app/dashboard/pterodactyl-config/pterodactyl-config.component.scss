@@ -1,0 +1,49 @@
+﻿.container {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  article {
+    background: #1e1e1e;
+    border-radius: 8px;
+    width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid #333;
+      font-size: 16px; font-weight: 600; color: #fff;
+      .close-btn { width: 16px; height: 16px; cursor: pointer; color: #888; &:hover { color: #fff; } }
+    }
+    section { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+    footer { display: flex; justify-content: flex-end; gap: 12px; padding: 16px 24px; border-top: 1px solid #333; }
+  }
+}
+.form-group {
+  display: flex; flex-direction: column; gap: 6px;
+  label { font-size: 13px; color: #aaa; }
+  input { background: #2a2a2a; border: 1px solid #444; border-radius: 6px; padding: 10px 12px; color: #fff; font-size: 14px;
+    &:focus { outline: none; border-color: #cc4400; } &::placeholder { color: #555; } }
+}
+.splitted {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  label { font-size: 13px; color: #aaa; display: block; margin-bottom: 6px; }
+  input { width: 100%; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; padding: 10px 12px; color: #fff; font-size: 14px; box-sizing: border-box;
+    &:focus { outline: none; border-color: #cc4400; } }
+}
+.test-result {
+  .success, .error { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 6px; font-size: 14px;
+    svg { width: 20px; height: 20px; flex-shrink: 0; } }
+  .success { background: rgba(34,197,94,0.15); color: #22c55e; }
+  .error { background: rgba(239,68,68,0.15); color: #ef4444; }
+}
+button { padding: 10px 20px; border-radius: 6px; border: none; cursor: pointer; font-size: 14px; background: #333; color: #fff; transition: background 0.2s;
+  &:hover { background: #444; } &.primary { background: #cc4400; &:hover { background: #dd5500; } }
+  &:disabled { opacity: 0.5; cursor: not-allowed; } &.loading { opacity: 0.7; cursor: wait; } }

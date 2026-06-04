@@ -1,0 +1,42 @@
+.container {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 1000;
+  article {
+    background: #1e1e1e; border-radius: 8px; width: 840px; max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px;
+      border-bottom: 1px solid #333; font-size: 16px; font-weight: 600; color: #fff;
+      .close-btn { width: 16px; height: 16px; cursor: pointer; color: #888; &:hover { color: #fff; } } }
+    nav { padding: 16px 24px; border-bottom: 1px solid #333; }
+    section { padding: 24px; }
+  }
+}
+.upload-section { display: flex; gap: 12px; }
+.upload-btn { background: #cc4400; color: #fff; border: none; padding: 10px 20px; border-radius: 6px;
+  cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px;
+  svg { width: 16px; height: 16px; } &:hover { background: #dd5500; } }
+button { background: #333; color: #fff; border: none; padding: 10px 20px; border-radius: 6px;
+  cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px;
+  &:hover { background: #444; } svg { width: 16px; height: 16px; }
+  &.mini { padding: 6px 10px; background: #2a2a2a; &:hover { background: #3a3a3a; }
+    &.danger { color: #ef4444; &:hover { background: rgba(239,68,68,0.15); } } } }
+.plugins-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.plugin-card { background: #2a2a2a; border-radius: 8px; padding: 16px; border: 1px solid #333; transition: border-color 0.2s;
+  &:hover { border-color: #555; }
+  &.disabled { opacity: 0.6; }
+  &.has-update { border-color: #f59e0b; }
+  .plugin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
+    h3 { font-size: 15px; font-weight: 600; color: #fff; margin: 0; }
+    .plugin-actions { display: flex; gap: 6px; } }
+  .plugin-info {
+    p { margin: 4px 0; font-size: 13px; color: #888; }
+    .version { color: #aaa; font-weight: 500; .update-badge { color: #f59e0b; font-size: 12px; margin-left: 6px; } }
+    .author { color: #888; }
+    .description { color: #aaa; font-size: 12px; }
+    .filename { color: #555; font-size: 11px; font-family: monospace; } }
+  .plugin-footer { margin-top: 12px; .umod-link { color: #cc4400; font-size: 13px; text-decoration: none;
+    &:hover { text-decoration: underline; } } } }
+.empty-state { text-align: center; padding: 48px; color: #555;
+  svg { width: 48px; height: 48px; margin-bottom: 16px; }
+  h3 { color: #888; } p { font-size: 14px; } }
+.loading { opacity: 0.7; cursor: wait; }

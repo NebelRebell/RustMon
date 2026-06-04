@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+﻿import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -60,6 +60,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   // pannels:
   permsPanel = false;
+  pterodactylConfigPanel = false;
+  pluginManagerPanel = false;
+  convarsManagerPanel = false;
+  wipeManagerPanel = false;
 
   @ViewChild('chatCompo', {static: false}) chatCompo?: ChatComponent;
   @ViewChild('console', {static: false}) consoleBox: any;
@@ -323,7 +327,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   github() {
-    window.open('https://github.com/alexander171294/RustMon', "__blank");
+    window.open('https://github.com/NebelRebell/RustMon', "__blank");
   }
 
   recordChatMessage(data: any) {

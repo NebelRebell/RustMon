@@ -10,6 +10,7 @@ import { BlacklistModule } from './blacklist/blacklist.module';
 import { ScheduledCommandsModule } from './scheduled-commands/scheduled-commands.module';
 import { VpnModule } from './vpn/vpn.module';
 import { DiscordModule } from './discord/discord.module';
+import { PterodactylModule } from './pterodactyl/pterodactyl.module';
 import { environment } from './environment';
 
 const apmImports: any[] = [];
@@ -35,6 +36,7 @@ if (environment.APM.enabled) {
     ScheduledCommandsModule,
     VpnModule,
     DiscordModule,
+    PterodactylModule,
     ...apmImports,
   ],
   controllers: [AppController],
