@@ -3,7 +3,8 @@
 A powerful, self-hosted admin panel for Rust game servers. Manage players, plugins, wipes, console, and more — all from one modern web interface.
 
 > **Forked from** [alexander171294/RustMon](https://github.com/alexander171294/RustMon) (Apache-2.0) and [NinerAlpha/RustMon](https://github.com/NinerAlpha/RustMon).  
-> Extended by [NebelRebell](https://github.com/NebelRebell) with multi-user auth, OAuth, VPN detection, Discord bot, and more.
+> Extended by [NebelRebell](https://github.com/NebelRebell) with multi-user auth, OAuth, VPN detection, Discord bot, and more.  
+> See [NOTICE](NOTICE) for full attribution details.
 
 ---
 
@@ -86,4 +87,4 @@ Default admin: `admin@rustmon.local` / `change-me-now` (change via `ADMIN_EMAIL`
 
 ## License
 
-Apache-2.0 — see [LICENSE](LICENSE).
+Apache-2.0 — see [LICENSE](LICENSE). Attribution details are in [NOTICE](NOTICE).
