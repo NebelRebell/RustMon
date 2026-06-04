@@ -1,0 +1,30 @@
+.admin-dashboard {
+  padding: 2rem;
+  background: #1a1a2e;
+  min-height: 100vh;
+  color: #e0e0e0;
+}
+.admin-header {
+  display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;
+  h2 { margin: 0; color: #e94560; }
+  .badge { background: #e94560; color: #fff; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; }
+}
+.users-panel {
+  background: #16213e; border: 1px solid #0f3460; border-radius: 8px; padding: 1.5rem;
+  h3 { margin: 0 0 1rem; color: #aaa; }
+}
+.users-table {
+  width: 100%; border-collapse: collapse;
+  th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #0f3460; }
+  th { color: #888; font-size: 0.85rem; text-transform: uppercase; }
+}
+.role-badge {
+  background: #0f3460; color: #aaa; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem;
+  &.admin { background: #e94560; color: #fff; }
+}
+.btn-delete {
+  background: #c0392b; color: #fff; border: none; padding: 0.3rem 0.8rem; border-radius: 4px; cursor: pointer;
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
+  &:hover:not(:disabled) { background: #e74c3c; }
+}
+.loading, .empty { color: #666; font-style: italic; }

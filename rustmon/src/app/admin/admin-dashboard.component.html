@@ -1,0 +1,31 @@
+<div class="admin-dashboard">
+  <div class="admin-header">
+    <h2>Admin Dashboard</h2>
+    <span class="badge">Admin</span>
+  </div>
+  <div class="users-panel">
+    <h3>Users</h3>
+    <div *ngIf="loading" class="loading">Loading...</div>
+    <table *ngIf="!loading && users.length > 0" class="users-table">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{user.email}}</td>
+          <td><span class="role-badge" [class.admin]="user.role === 'admin'">{{user.role}}</span></td>
+          <td>{{user.createdAt | date:'short'}}</td>
+          <td>
+            <button class="btn-delete" (click)="deleteUser(user.id)" [disabled]="user.role === 'admin'">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="!loading && users.length === 0" class="empty">No users found.</p>
+  </div>
+</div>
